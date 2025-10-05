@@ -1,0 +1,39 @@
+name: Azure OpenAI - Table of 5
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-table-5:
+    runs-on: ubuntu-latest
+
+    env:
+      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+      AZURE_OPENAI_MODEL: ${{ secrets.AZURE_OPENAI_MODEL }}
+      AZURE_OPENAI_VERSION: ${{ secrets.AZURE_OPENAI_VERSION }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Call Azure OpenAI to print table of 5
+        run: |
+          echo "Sending request to Azure OpenAI..."
+
+          RESPONSE=$(curl -s -X POST "${AZURE_OPENAI_ENDPOINT}openai/deployments/${AZURE_OPENAI_MODEL}/chat/completions?api-version=${AZURE_OPENAI_VERSION}" \
+            -H "Content-Type: application/json" \
+            -H "api-key: ${AZURE_OPENAI_API_KEY}" \
+            -d '{
+              "messages": [
+                {"role": "user", "content": "Print the multiplication table of 5."}
+              ],
+              "temperature": 0.5,
+              "max_tokens": 100
+            }')
+
+          echo "Raw Response:"
+          echo "$RESPONSE"
+
+          echo "Parsed Response:"
+          echo "$RESPONSE" | jq -r '.choices[0].message.content'
