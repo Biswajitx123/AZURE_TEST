@@ -1,10 +1,10 @@
-name: Azure OpenAI - Table of 5
+name: Azure OpenAI - Table of 13
 
 on:
   workflow_dispatch:
 
 jobs:
-  print-table-5:
+  print-table-13:
     runs-on: ubuntu-latest
 
     env:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Call Azure OpenAI to print table of 5
+      - name: Call Azure OpenAI to print table of 13
         run: |
           echo "Sending request to Azure OpenAI..."
 
