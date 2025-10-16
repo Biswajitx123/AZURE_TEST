@@ -14,9 +14,6 @@ jobs:
       AZURE_OPENAI_VERSION: ${{ secrets.AZURE_OPENAI_VERSION }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Call Azure OpenAI to print table of 13
         run: |
           echo "Sending request to Azure OpenAI..."
